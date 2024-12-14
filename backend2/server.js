@@ -1,25 +1,39 @@
-// server.js
+// backend2/server.js
 const express = require('express');
-const cors = require('cors');  // For cross-origin resource sharing
+const cors = require('cors');
 const bodyParser = require('body-parser');
-const authRoutes = require('./routes/authRoutes'); // Importing authentication routes
 
 const app = express();
-const port = 5000;
+const PORT = process.env.PORT || 3000;
 
-// Middleware to allow cross-origin requests from the frontend (React app)
-app.use(cors({
-  origin: 'http://localhost:3000',  // React frontend URL
-  methods: ['GET', 'POST']
-}));
-
-// Middleware to parse incoming requests with JSON payloads
+// Middleware
+app.use(cors({ origin: 'https://frontend2-6iqv.onrender.com' }));
 app.use(bodyParser.json());
 
-// Use auth routes for login and registration
-app.use('/api', authRoutes);
+
+// Routes
+app.get('/api/users', (req, res) => {
+  res.json(users);
+});
+
+app.post('/api/users', (req, res) => {
+  const newUser = req.body;
+  users.push(newUser);
+  res.status(201).json(newUser);
+});
+
+// Protected route (requires token)
+app.get('/protected-route', (req, res) => {
+  const token = req.headers['authorization'];
+
+  if (token !== 'Bearer valid-jwt-token') {
+    return res.status(403).json({ message: 'Forbidden' });
+  }
+
+  res.json({ message: 'This is protected data' });
+});
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
