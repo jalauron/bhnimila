@@ -1,0 +1,59 @@
+/* Body Background */
+body {
+  background: #f0f2f5; /* Light grayish background like Facebook */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* Container for login */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Login Card Styling */
+.login-card {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 15px;
+  width: 350px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Login Button Hover Effect */
+.hover-effect:hover {
+  background-color: #1877f2; /* Facebook blue */
+  transition: 0.3s;
+  color: white;
+}
+
+/* Input fields rounded */
+.form-control {
+  border-radius: 25px;
+  padding: 15px;
+}
+
+/* Login Page Logo */
+.login-logo {
+  font-family: 'Arial', sans-serif;
+  font-size: 2rem;
+  color: #1877f2; /* Facebook blue */
+  font-weight: bold;
+}
+
+/* Link styles */
+.forgot-password {
+  color: #1877f2;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
