@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Axios GET with Authorization</title>
+  <!-- Include Axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <h1>Axios GET Request with Authorization</h1>
+  <button onclick="getProtectedData()">Get Protected Data</button>
+  <pre id="response"></pre>
+
+  <script>
+    function getProtectedData() {
+      // Get token from localStorage (assuming the user is logged in)
+      const token = localStorage.getItem('token'); // Replace with your token logic
+      
+      if (!token) {
+        document.getElementById('response').textContent = 'No token found. Please log in.';
+        return;
+      }
+
+      axios.get('https://your-backend-api.com/protected-route', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then(response => {
+          // Handle success
+          document.getElementById('response').textContent = `Protected data: ${JSON.stringify(response.data, null, 2)}`;
+        })
+        .catch(error => {
+          // Handle error
+          document.getElementById('response').textContent = `Error: ${error.response ? error.response.data : error.message}`;
+        });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fetch API POST Request</title>
+</head>
+<body>
+  <h1>Fetch API POST Request</h1>
+  <button onclick="createUser()">Create User</button>
+  <pre id="response"></pre>
+
+  <script>
+    function createUser() {
+      fetch('https://your-backend-api.com/api/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: 'John Doe',
+          email: 'john@example.com'
+        })
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          // Handle success
+          document.getElementById('response').textContent = `User added: ${JSON.stringify(data, null, 2)}`;
+        })
+        .catch(error => {
+          // Handle error
+          document.getElementById('response').textContent = `Error: ${error}`;
+        });
+    }
+  </script>
+</body>
+</html>
