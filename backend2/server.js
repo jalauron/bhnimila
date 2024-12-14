@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(cors({ origin: 'https://frontend2-6iqv.onrender.com' }));
+app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(bodyParser.json());
 
 
