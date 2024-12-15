@@ -24,7 +24,7 @@ function Register() {
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/api/register', { username, password });
+            const response = await axios.post('/api/register', { username, password });
             if (response.data.success) {
                 alert('Registration successful!');
                 navigate('/'); // Redirect to login page after successful registration

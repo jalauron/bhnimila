@@ -10,7 +10,7 @@ function App() {
         <Router>
             <Routes>
                 {/* Main page which contains Login and Register */}
-                <Route path="/" element={<MainPage />} />
+                <Route path="/" element={<Login />} />
 
                 {/* Separate route for Register page */}
                 <Route path="/register" element={<Register />} />

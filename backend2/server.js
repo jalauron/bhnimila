@@ -1,39 +1,31 @@
-// backend2/server.js
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
+const authController = require('./controllers/authController'); // Import the authentication controller
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = 5000;
 
-// Middleware
-app.use(cors({ origin: 'http://localhost:3000' }));
-app.use(bodyParser.json());
+// Middleware to allow cross-origin requests from the frontend (React app)
+app.use(cors({
+  origin: 'http://localhost:5173', // Your frontend URL (make sure it matches your frontend's URL)
+  methods: ['GET', 'POST'], // You can restrict the methods here if needed
+  allowedHeaders: ['Content-Type', 'Authorization'], // You can also specify allowed headers
+}));
 
+// Middleware to parse incoming JSON requests
+app.use(express.json()); // Replaces bodyParser.json()
 
-// Routes
-app.get('/api/users', (req, res) => {
-  res.json(users);
-});
+// Register routes for user authentication
+app.post('/api/register', authController.register); // Register route
+app.post('/api/login', authController.login); // Login route
 
-app.post('/api/users', (req, res) => {
-  const newUser = req.body;
-  users.push(newUser);
-  res.status(201).json(newUser);
-});
-
-// Protected route (requires token)
-app.get('/protected-route', (req, res) => {
-  const token = req.headers['authorization'];
-
-  if (token !== 'Bearer valid-jwt-token') {
-    return res.status(403).json({ message: 'Forbidden' });
-  }
-
-  res.json({ message: 'This is protected data' });
+// Global error handler (optional but recommended)
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something went wrong!');
 });
 
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });

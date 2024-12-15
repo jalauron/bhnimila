@@ -1,29 +1,37 @@
-// In Dashboard.jsx
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import {jwtDecode} from 'jwt-decode'; 
 
 function Dashboard() {
+    const [user, setUser] = useState(null);
     const navigate = useNavigate();
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
-        // Check if the JWT token exists in localStorage
-        const token = localStorage.getItem('authToken');
-        if (token) {
-            setIsAuthenticated(true);
-        } else {
-            navigate('/'); // Redirect to login if not authenticated
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/login'); // Redirect to login if no token
+            return;
+        }
+
+        try {
+            const decodedToken = jwtDecode(token); // Decode the JWT token
+            setUser(decodedToken); // Store the user info from the decoded token
+        } catch (error) {
+            console.error('Token decode error:', error);
+            navigate('/login'); // Redirect if token is invalid
         }
     }, [navigate]);
 
-    if (!isAuthenticated) {
-        return null; // Or a loading spinner, etc.
-    }
+    const handleLogout = () => {
+        localStorage.removeItem('token'); // Remove token from localStorage
+        navigate('/login'); // Redirect to login page
+    };
 
     return (
-        <div className="dashboard-container">
-            <h1>Welcome to your Dashboard!</h1>
-            <p>Here is your overview.</p>
+        <div>
+            <h1>Welcome to the Dashboard, {user ? user.username : 'Guest'}</h1>
+            <button onClick={handleLogout}>Logout</button>
         </div>
     );
 }

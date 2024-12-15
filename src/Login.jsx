@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 import './mainpage.css';
 
-function Login() {
+const Login =() => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -15,7 +15,7 @@ function Login() {
         e.preventDefault();
         console.log('Username:', username, 'Password:', password);  // Debugging step
         try {
-            const response = await axios.post('http://localhost:5000/api/login', { username, password });
+            const response = await axios.post('${API_ENDPOINT}/auth/login', {username, password });
             console.log('Response:', response.data);  // Debugging step
             if (response.data.success) {
                 localStorage.setItem('authToken', response.data.token);
