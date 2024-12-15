@@ -15,7 +15,7 @@ const Login =() => {
         e.preventDefault();
         console.log('Username:', username, 'Password:', password);  // Debugging step
         try {
-            const response = await axios.post('${API_ENDPOINT}/auth/login', {username, password });
+            const response = await axios.post('https://backend-1-xuab.onrender.com/api/boarders/loginBoarders', {username, password });
             console.log('Response:', response.data);  // Debugging step
             if (response.data.success) {
                 localStorage.setItem('authToken', response.data.token);
